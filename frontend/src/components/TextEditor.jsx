@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import { Box } from '@mui/material';
@@ -28,10 +28,27 @@ const toolbarOptions = [
 ];
 
 const TextEditor = () => {
+    const [socket, setSocket] = useState();
+    const [quill, setQuill] = useState();
+
 
     useEffect(() => {
         const quillServer = new Quill('#container', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+        setQuill(quillServer);
     }, []);
+
+    useEffect(() => {
+        const socketServer = io('http://localhost:8888');
+        setSocket(socketServer);
+
+        return () => {
+            socketServer.disconnect();
+        }
+    })
+
+    useEffect(() => {
+        quill.setQuill(socket);
+    })
 
     return (
         <Component>

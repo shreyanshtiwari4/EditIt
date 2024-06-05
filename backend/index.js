@@ -5,9 +5,11 @@ const PORT = 8888;
 
 const io = new Server(PORT, {
     cors: {
-        origin: 'http://calhost:5173/',
+        origin: 'http://localhost:5173/text-editor',
         methods: ['GET', 'POST']
     }
 });
 
-io.on('connection', socket => {});
+io.on('connection', socket => {
+    console.log('connected');
+});
