@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import { Box } from '@mui/material';
+import 'tailwindcss/tailwind.css';
+
 
 const TextEditor = () => {
     const toolbarOptions = [
@@ -26,7 +28,10 @@ const TextEditor = () => {
     }, []);
 
     return (
-        <Box id="container" className="ql-toolbar ql-snow"></Box>
+        <Box 
+            id="container" 
+            className=" ql-toolbar ql-snow ">
+        </Box>
     );
 }
 

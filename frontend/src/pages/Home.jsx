@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import BlankCodePage from '../components/BlankCodePage';
-import BlankTextPage from '../components/BlankTextPage';
+import { Link , useNavigate} from 'react-router-dom';
+import BlankPage from '../components/BlankPage';
+
+
 
 const Home = () => {
     // const [fullScreen, setFullScreen] = useState(null);
@@ -42,6 +43,12 @@ const Home = () => {
     //     );
     // }
 
+    const navigate = useNavigate();
+
+    const navToTextEditor = () => {
+        navigate('/text-editor');
+    }
+
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
             <h1 className="text-3xl font-bold mb-6">EditIt - Your own text and code editor</h1>
@@ -49,10 +56,10 @@ const Home = () => {
                 <h2 className="text-2xl font-semibold mb-4">Document Types</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Link to="/text-editor">
-                        <BlankTextPage />
+                        <BlankPage    content = " Blank Text Doc "/>
                     </Link>
                     <Link to="/code-editor">
-                        <BlankCodePage />
+                        <BlankPage  content = " Blank Code Editor "/>
                     </Link>
                 </div>
             </div>
