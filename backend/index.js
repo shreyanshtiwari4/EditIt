@@ -5,7 +5,7 @@ const PORT = 8888;
 
 const io = new Server(PORT, {
     cors: {
-        origin: 'http://localhost:5173/text-editor',
+        origin: 'http://localhost:5173',
         methods: ['GET', 'POST']
     }
 });

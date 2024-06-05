@@ -44,10 +44,10 @@ const TextEditor = () => {
         return () => {
             socketServer.disconnect();
         }
-    })
+    }, []);
 
     useEffect(() => {
-        quill.setQuill(socket);
+        // quill.setQuill(socket);
     })
 
     return (
