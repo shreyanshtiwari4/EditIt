@@ -35,10 +35,15 @@ const TextEditor = () => {
 
 
     useEffect(() => {
-        const quillServer = new Quill('#container', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+
+        // Instantiating the quill server 
+        const quillServer = new Quill('#container', { theme: 'snow' ,modules: { toolbar: toolbarOptions } } );
+        setQuill(quillServer);
+
+        // Disabling any typing untill the document ( which is previously saved ) is loaded
         quillServer.disable();
         quillServer.setText('Loading...');
-        setQuill(quillServer);
+
     }, []);
 
     useEffect(() => {
@@ -50,6 +55,18 @@ const TextEditor = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if(quill && socket){
+            socket.once('load-document', document => {
+                quill.setContents(document);
+                quill.enable();
+            })
+            socket.emit('connected', id);
+        }
+    }, [quill, socket, id]);
+
+
+
     useEffect(() => {//sending changes to server from quill by user
         if(quill && socket){
             const handleChange = (delta, oldData, source) => {
@@ -57,6 +74,7 @@ const TextEditor = () => {
     
                 socket.emit('send-changes',delta);
             }
+
     
             quill.on('text-change', handleChange);
     
@@ -79,17 +97,6 @@ const TextEditor = () => {
             }
         }
     }, [quill, socket]);
-
-    useEffect(() => {
-        if(quill && socket){
-            socket.once('load-document', document => {
-                quill.setContents(document);
-                quill.enable();
-            })
-
-            socket.emit('get-document', id);
-        }
-    }, [quill, socket, id]);
 
 
     return (

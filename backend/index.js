@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-
+import { updateDocument } from './controllers/documentController';
 
 const PORT = 8888;
 
@@ -11,7 +11,7 @@ const io = new Server(PORT, {
 });
 
 io.on('connection', socket => {
-    socket.on('get-document', documentId => {
+    socket.on('connected', documentId => {
         const data = "";
         socket.join(documentId);
         socket.emit('load-document', data);
@@ -19,5 +19,6 @@ io.on('connection', socket => {
         socket.on('send-changes', delta => {
             socket.broadcast.to(documentId).emit('receive-changes', delta); //recieve-change event created which will recieve the changes i.e. delta that are made by user and use this event to reflect the changes on every other user's screen
         });
+        
     })
 });
