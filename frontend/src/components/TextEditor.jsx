@@ -3,8 +3,9 @@ import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import { Box } from '@mui/material';
 import styled from '@emotion/styled';
-
 import { io } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
+
 
 const Component = styled.div`
     background: #F5F5F5;
@@ -30,10 +31,13 @@ const toolbarOptions = [
 const TextEditor = () => {
     const [socket, setSocket] = useState();
     const [quill, setQuill] = useState();
+    const { id } = useParams();
 
 
     useEffect(() => {
         const quillServer = new Quill('#container', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+        quillServer.disable();
+        quillServer.setText('Loading...');
         setQuill(quillServer);
     }, []);
 
@@ -46,9 +50,47 @@ const TextEditor = () => {
         }
     }, []);
 
+    useEffect(() => {//sending changes to server from quill by user
+        if(quill && socket){
+            const handleChange = (delta, oldData, source) => {
+                if(source !== 'user') return;
+    
+                socket.emit('send-changes',delta);
+            }
+    
+            quill.on('text-change', handleChange);
+    
+            return () => {
+                quill.off('text-change', handleChange);
+            }
+        }
+    }, [quill, socket]);
+
+    useEffect(() => {//recieving changes from server to quill
+        if(quill && socket){
+            const handleChange = (delta) => {
+                quill.updateContents(delta);
+            }
+    
+            socket.on('receive-changes', handleChange);
+    
+            return () => {
+                socket.off('receive-changes', handleChange);
+            }
+        }
+    }, [quill, socket]);
+
     useEffect(() => {
-        // quill.setQuill(socket);
-    })
+        if(quill && socket){
+            socket.once('load-document', document => {
+                quill.setContents(document);
+                quill.enable();
+            })
+
+            socket.emit('get-document', id);
+        }
+    }, [quill, socket, id]);
+
 
     return (
         <Component>
