@@ -27,8 +27,8 @@ exports.createDocument = async (req, res) => {
   try {
     const { title, content, ownerId } = req.body;
     const document = new Document({ title, content, ownerId });
-    await document.save();
-    res.status(201).json({ message: 'Document created successfully' });
+    const response = await document.save();
+    res.status(201).json(response);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
