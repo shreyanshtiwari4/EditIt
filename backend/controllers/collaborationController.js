@@ -1,4 +1,4 @@
-const Document = require('../models/Document');
+const Document = require('../models/documentModel');
 
 exports.shareDocument = async (req, res) => {
   try {

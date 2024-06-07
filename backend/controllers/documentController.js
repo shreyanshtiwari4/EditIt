@@ -1,6 +1,6 @@
 // documentController.js
 
-const Document = require('../models/Document');
+const Document = require('../models/documentModel');
 
 exports.getAllDocuments = async (req, res) => {
   try {
@@ -23,16 +23,19 @@ exports.getDocumentById = async (req, res) => {
   }
 };
 
+
 exports.createDocument = async (req, res) => {
   try {
-    const { title, content, ownerId } = req.body;
-    const document = new Document({ title, content, ownerId });
-    const response = await document.save();
+    console.log('Request body:', req.body);
+    const { title, type } = req.body; // Ensure to destructure type as well
+    const response = await Document.create({ title, type }); // Use create method directly
     res.status(201).json(response);
   } catch (error) {
+    console.error('Error creating document:', error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.updateDocument = async (req, res) => {
   try {
