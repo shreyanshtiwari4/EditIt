@@ -1,3 +1,5 @@
+require('dotenv').config({ path: './config/config.env' });
+
 const { Server } = require('socket.io');
 const express = require('express');
 const cors = require('cors');
