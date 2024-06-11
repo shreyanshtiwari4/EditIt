@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BlankPage from '../components/BlankPage';
 import Modal from '../components/Modal';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -39,6 +40,8 @@ const Home = () => {
     };
 
     return (
+        <>
+        <Navbar />
         <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
             <header className="w-full bg-white shadow-sm p-4 mb-6">
                 <div className="max-w-4xl mx-auto flex justify-between items-center">
@@ -69,6 +72,7 @@ const Home = () => {
                 docType={modalType}
             />
         </div>
+        </>
     );
 };
 

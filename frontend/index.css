@@ -3,8 +3,3 @@
 @tailwind utilities;
 
 
-@layer base {
-    .ql-toolbar.ql-snow {
-      @apply flex justify-center sticky top-0 z-10 bg-gray-100 border-none shadow-md;
-    }
-  }
