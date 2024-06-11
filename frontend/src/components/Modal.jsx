@@ -1,38 +1,45 @@
-// Modal.js
 import React, { useState } from 'react';
 
 const Modal = ({ isOpen, onClose, onCreate, docType }) => {
     const [title, setTitle] = useState('');
 
-    const handleCreate = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         onCreate(title);
         setTitle('');
+        onClose();
     };
 
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={onClose}>
-            <div className="bg-white p-8 rounded shadow-md w-96 relative" onClick={(e) => e.stopPropagation()}>
-                <button onClick={onClose} className="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
-                    &times;
-                </button>
-                <h2 className="text-2xl font-semibold mb-4">Create New {docType} Document</h2>
-                <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="w-full border border-gray-300 p-2 mb-4"
-                    placeholder="Document Title"
-                />
-                <div className="flex justify-end">
-                    <button onClick={handleCreate} className="bg-blue-500 text-white py-2 px-4 rounded mr-2">
-                        Create
-                    </button>
-                    <button onClick={onClose} className="bg-gray-500 text-white py-2 px-4 rounded">
-                        Cancel
-                    </button>
-                </div>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-xl font-semibold mb-4">Create New {docType} Document</h2>
+                <form onSubmit={handleSubmit}>
+                    <input 
+                        type="text" 
+                        placeholder="Document Title" 
+                        className="w-full p-2 mb-4 border rounded-md"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <div className="flex justify-end">
+                        <button 
+                            type="button" 
+                            className="bg-gray-300 px-4 py-2 rounded-md mr-2"
+                            onClick={onClose}
+                        >
+                            Cancel
+                        </button>
+                        <button 
+                            type="submit" 
+                            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                        >
+                            Create
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );

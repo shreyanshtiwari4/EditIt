@@ -1,9 +1,9 @@
 import React from 'react';
 
-const BlankPage = ( props ) => {
+const BlankPage = ({ content }) => {
     return (
-        <div className="cursor-pointer p-4 bg-white rounded shadow hover:bg-gray-100">
-            <h3 className="text-xl font-semibold">{props.content}</h3>
+        <div className="flex flex-col items-center justify-center h-full">
+            <div className="text-lg font-medium text-gray-700">{content}</div>
         </div>
     );
 };
