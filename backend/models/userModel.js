@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   avatarURL: {
     type: String,
-    default: "https://cdn-icons-png.flaticon.com/512/666/666201.png" // Default avatar URL
+    default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg" // Default avatar URL
   },
   collaboratedDocuments: [{
     type: mongoose.Schema.Types.ObjectId,
